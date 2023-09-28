@@ -1,10 +1,10 @@
-package com.alura.foroinicial;
+package com.alura.foroalura;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ForoInicialApplicationTests {
+class ForoAluraApplicationTests {
 
 	@Test
 	void contextLoads() {

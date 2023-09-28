@@ -1,11 +1,42 @@
-package com.alura.modelo;
+package com.alura.foroalura.domain.topico;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alura.foroalura.domain.curso.Curso;
+import com.alura.foroalura.domain.respuesta.Respuesta;
+import com.alura.foroalura.domain.usuario.Usuario;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+// Anotación para mapear la entidad 'Topico' a una tabla llamada 'topico' en la base de datos.
+@Table(name = "topico")
+// Anotación para marcar esta clase como una entidad JPA.
+@Entity(name = "Topico")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+// Utilizada para generar el método equals y hashCode basado en el campo 'id'.
+@EqualsAndHashCode(of = "id")
+/**
+ * 
+ * la clase Topico representa la entidad de un topico con sus atributos básicos
+ * y proporciona métodos para administrar y actualizar esos datos. Esta clase es
+ * esencial en un sistema del foro.
+ * 
+ */
 public class Topico {
 
+	// Anotación para especificar que este campo es la clave primaria y que se
+	// generará automáticamente.
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_topico")
 	private Long id;
 	private String titulo;
 	private String mensaje;
@@ -19,31 +50,6 @@ public class Topico {
 		this.titulo = titulo;
 		this.mensaje = mensaje;
 		this.curso = curso;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Topico other = (Topico) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
 	}
 
 	public Long getId() {
