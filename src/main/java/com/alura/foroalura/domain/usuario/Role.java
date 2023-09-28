@@ -1,4 +1,4 @@
-package com.alura.foroalura.infra.security;
+package com.alura.foroalura.domain.usuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

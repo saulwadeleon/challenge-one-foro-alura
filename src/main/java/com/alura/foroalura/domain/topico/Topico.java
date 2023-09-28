@@ -23,13 +23,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 // Utilizada para generar el método equals y hashCode basado en el campo 'id'.
 @EqualsAndHashCode(of = "id")
-/**
- * 
- * la clase Topico representa la entidad de un topico con sus atributos básicos
- * y proporciona métodos para administrar y actualizar esos datos. Esta clase es
- * esencial en un sistema del foro.
- * 
- */
 public class Topico {
 
 	// Anotación para especificar que este campo es la clave primaria y que se
@@ -38,12 +31,25 @@ public class Topico {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_topico")
 	private Long id;
+
+	@Column(name = "titulo_topico")
 	private String titulo;
+
+	@Column(name = "mensaje_topico")
 	private String mensaje;
+
+	@Column(name = "fecha_creacion")
 	private LocalDateTime fechaCreacion = LocalDateTime.now();
-	private StatusTopico status = StatusTopico.NO_RESPONDIDO;
+
+	@Column(name = "autor_topicoId")
 	private Usuario autor;
+
+	@Column(name = "curso_Id")
 	private Curso curso;
+
+	@Column(name = "estatus_topico")
+	private StatusTopico status = StatusTopico.NO_RESPONDIDO;
+
 	private List<Respuesta> respuestas = new ArrayList<>();
 
 	public Topico(String titulo, String mensaje, Curso curso) {
