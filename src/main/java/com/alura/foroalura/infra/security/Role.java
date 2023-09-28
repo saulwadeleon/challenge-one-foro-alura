@@ -34,7 +34,7 @@ public class Role {
     @Column(name = "id_usuario")
     private Long id;
 
-    @Column(name = "nombre_role")
+    @Column(name = "nombre_role", unique = true)
     private String nombre_role;
 
     public Long getId() {

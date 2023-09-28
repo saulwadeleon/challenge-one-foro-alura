@@ -32,7 +32,7 @@ public class Categoria {
     @Column(name = "id_categoria")
     private Long id;
 
-    @Column(name = "dsc_categoria")
+    @Column(name = "dsc_categoria", unique = true)
     private String nombre;
 
     public Categoria(String nombre) {

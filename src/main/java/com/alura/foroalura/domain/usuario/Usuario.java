@@ -56,10 +56,20 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario")
 	private Long id;
+
+	@Column(name = "nombre")
 	private String nombre;
+
+	@Column(name = "apellido")
 	private String apellido;
+
+	@Column(name = "email")
 	private String email;
+
+	@Column(name = "username", unique = true)
 	private String username;
+
+	@Column(name = "password")
 	private String password;
 
 	@ManyToOne(fetch = FetchType.EAGER)
