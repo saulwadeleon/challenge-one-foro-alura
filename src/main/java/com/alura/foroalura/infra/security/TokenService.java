@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.alura.foroalura.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -34,17 +35,20 @@ public class TokenService {
      * @param usuario El objeto Usuario que representa al usuario autenticado.
      * @return El token JWT generado.
      */
-    public String generarToken(Usuario usuario) {
+    public String generarToken(UserDetails userDetails) {
+        if (userDetails == null) {
+            throw new IllegalArgumentException("UserDetails no puede ser nulo");
+        }
+
         try {
             // Crear un algoritmo de firma HMAC256 con la clave secreta
             Algorithm algorithm = Algorithm.HMAC256(foroAluraSecret);
 
-            // Generar un token JWT con el emisor, el nombre de usuario, un claim
-            // personalizado (ID) y la fecha de expiración
+            // Generar un token JWT con el emisor, el nombre de usuario y la fecha de
+            // expiración
             return JWT.create()
                     .withIssuer("foro alura")
-                    .withSubject(usuario.getUsername())
-                    .withClaim("id", usuario.getId())
+                    .withSubject(userDetails.getUsername())
                     .withExpiresAt(generarFechaExpiracion())
                     .sign(algorithm); // Firmar el token con el algoritmo
         } catch (JWTCreationException exception) {
@@ -69,7 +73,7 @@ public class TokenService {
 
             // Verificar la firma y descomprimir el token JWT
             verifier = JWT.require(algorithm)
-                    .withIssuer("voll med")
+                    .withIssuer("foro alura")
                     .build()
                     .verify(token);
 
@@ -117,4 +121,5 @@ public class TokenService {
         // desplazamiento horario específico
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
     }
+
 }

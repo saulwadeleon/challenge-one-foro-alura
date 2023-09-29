@@ -32,8 +32,16 @@ public class SecurityConfigurations {
                         // Permitir todas las solicitudes POST a "/login" sin autenticación
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        // Requiere el rol "USER" para algunas solicitudes específicas
+                        .requestMatchers(HttpMethod.POST, "/topicos", "/respuestas")
+                        .hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/topicos", "/usuarios", "/respuestas")
+                        .hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/topicos", "/usuarios", "/respuestas")
+                        .hasAnyRole("USER", "ADMIN")
                         // Requiere el rol "ADMIN" para algunas solicitudes específicas
-                        .requestMatchers(HttpMethod.POST, "/topicos", "/usuarios", "/respuestas").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/usuarios").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/usuarios").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/topicos", "/usuarios", "/respuestas").hasRole("ADMIN")
                         // Requiere autenticación para cualquier otra solicitud no especificada
                         // anteriormente

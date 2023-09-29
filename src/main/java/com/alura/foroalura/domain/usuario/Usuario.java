@@ -49,16 +49,14 @@ public class Usuario implements UserDetails {
 
 	// Marca este campo como la clave primaria de la entidad.
 	@Id
-	// Especifica que el valor de 'id' se generará automáticamente utilizando una
-	// estrategia de identidad.
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_usuario")
+	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "nombre")
+	@Column(name = "nombre_usuario")
 	private String nombre;
 
-	@Column(name = "apellido")
+	@Column(name = "apellido_usuario")
 	private String apellido;
 
 	@Column(name = "email")
@@ -74,8 +72,9 @@ public class Usuario implements UserDetails {
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	private List<Role> roles;
+	// private List<Role> roles;
 
+	@Column(name = "activo")
 	private boolean activo;
 
 	// Constructor que acepta un nombre de usuario y una contraseña como argumentos.
@@ -122,7 +121,7 @@ public class Usuario implements UserDetails {
 		this.email = email;
 	}
 
-	public void setUsername(String username) {
+	public void setLogin(String username) {
 		this.username = username;
 	}
 
@@ -179,6 +178,10 @@ public class Usuario implements UserDetails {
 
 	public String[] getRole() {
 		return new String[] { "ROLE_" + role.getNombre() };
+	}
+
+	public String getLogin() {
+		return this.username;
 	}
 
 }

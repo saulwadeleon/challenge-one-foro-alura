@@ -20,6 +20,6 @@ import com.alura.foroalura.domain.usuario.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     // Este método busca un usuario por su nombre de usuario (login).
-    UserDetails findByLogin(String username);
+    UserDetails findByUsername(String username);
 
 }

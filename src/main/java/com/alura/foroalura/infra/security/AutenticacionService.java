@@ -40,7 +40,7 @@ public class AutenticacionService implements UserDetailsService {
         try {
             // Utiliza el repositorio de usuarios para buscar un usuario por su nombre de
             // usuario.
-            Usuario usuario = (Usuario) usuarioRepository.findByLogin(username);
+            Usuario usuario = (Usuario) usuarioRepository.findByUsername(username);
 
             if (usuario == null) {
                 throw new UsernameNotFoundException("Usuario no encontrado: " + username);
@@ -51,16 +51,17 @@ public class AutenticacionService implements UserDetailsService {
             List<GrantedAuthority> authorities = new ArrayList<>();
             for (String role : usuario.getRole()) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + role)); // Spring Security espera que los roles
-                                                                             // comiencen con "ROLE_"
+                                                                             // comiencen con "ROLE"
             }
 
             // Devolver un objeto UserDetails con el nombre de usuario, contraseña y roles
             return new org.springframework.security.core.userdetails.User(
-                    usuario.getUsername(),
+                    usuario.getLogin(),
                     usuario.getPassword(),
                     authorities);
         } catch (Exception e) {
             throw new UsernameNotFoundException("Error al buscar el usuario: " + e.getMessage());
         }
     }
+
 }

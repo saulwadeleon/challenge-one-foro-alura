@@ -26,12 +26,24 @@ public class Respuesta {
 	// generará automáticamente.
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_respuesta")
+	@Column(name = "id")
 	private Long id;
+
+	@Column(name = "mensaje_respuesta", columnDefinition = "TEXT")
 	private String mensaje;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "topicoId", referencedColumnName = "id")
 	private Topico topico;
+
+	@Column(name = "fecha_respuesta")
 	private LocalDateTime fechaCreacion = LocalDateTime.now();
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "autorId", referencedColumnName = "id")
 	private Usuario autor;
+
+	@Column(name = "solucion")
 	private Boolean solucion = false;
 
 	public Long getId() {

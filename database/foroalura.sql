@@ -21,9 +21,9 @@ USE `foroalura` ;
 -- Table `foroalura`.`categoria`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `foroalura`.`categoria` (
-  `id_categoria` BIGINT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `dsc_categoria` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_categoria`),
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `dsc_categoria_UNIQUE` (`dsc_categoria` ASC) VISIBLE)
 ENGINE = InnoDB;
 
@@ -32,14 +32,14 @@ ENGINE = InnoDB;
 -- Table `foroalura`.`curso`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `foroalura`.`curso` (
-  `id_curso` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL,
   `nombre_curso` VARCHAR(200) NOT NULL,
-  `categoria_id` BIGINT NOT NULL,
-  PRIMARY KEY (`id_curso`),
-  INDEX `fk_curso_categoria_idx` (`categoria_id` ASC) VISIBLE,
+  `categoriaId` BIGINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_curso_categoria_idx` (`categoriaId` ASC) VISIBLE,
   CONSTRAINT `fk_curso_categoria`
-    FOREIGN KEY (`categoria_id`)
-    REFERENCES `foroalura`.`categoria` (`id_categoria`)
+    FOREIGN KEY (`categoriaId`)
+    REFERENCES `foroalura`.`categoria` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -49,9 +49,9 @@ ENGINE = InnoDB;
 -- Table `foroalura`.`role`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `foroalura`.`role` (
-  `id_role` BIGINT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `nombre_role` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_role`),
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `nombre_role_UNIQUE` (`nombre_role` ASC) VISIBLE)
 ENGINE = InnoDB;
 
@@ -60,19 +60,20 @@ ENGINE = InnoDB;
 -- Table `foroalura`.`usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `foroalura`.`usuario` (
-  `id_usuario` BIGINT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `nombre_usuario` VARCHAR(100) NOT NULL,
   `apellido_usuario` VARCHAR(150) NULL,
   `username` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(200),
   `password` VARCHAR(255) NOT NULL,
   `role_id` BIGINT NOT NULL,
   `activo` TINYINT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id_usuario`),
+  PRIMARY KEY (`id`),
   INDEX `fk_usuario_rol_idx` (`role_id` ASC) VISIBLE,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
   CONSTRAINT `fk_usuario_rol`
     FOREIGN KEY (`role_id`)
-    REFERENCES `foroalura`.`role` (`id_role`)
+    REFERENCES `foroalura`.`role` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -82,24 +83,24 @@ ENGINE = InnoDB;
 -- Table `foroalura`.`topico`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `foroalura`.`topico` (
-  `id_topico` BIGINT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `titulo_topico` VARCHAR(200) NOT NULL,
   `mensaje_topico` TEXT(600) NOT NULL,
   `fecha_creacion` DATETIME NOT NULL,
-  `autor_topicoId` BIGINT NOT NULL,
-  `curso_id` BIGINT NOT NULL,
+  `autorId` BIGINT NOT NULL,
+  `cursoId` BIGINT NOT NULL,
   `estatus_topico` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_topico`),
-  INDEX `fk_topico_autor_idx` (`autor_topicoId` ASC) VISIBLE,
-  INDEX `fk_topico_curso_idx` (`curso_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`),
+  INDEX `fk_topico_autor_idx` (`autorId` ASC) VISIBLE,
+  INDEX `fk_topico_curso_idx` (`cursoId` ASC) VISIBLE,
   CONSTRAINT `fk_topico_autor`
-    FOREIGN KEY (`autor_topicoId`)
-    REFERENCES `foroalura`.`usuario` (`id_usuario`)
+    FOREIGN KEY (`autorId`)
+    REFERENCES `foroalura`.`usuario` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_topico_curso`
-    FOREIGN KEY (`curso_id`)
-    REFERENCES `foroalura`.`curso` (`id_curso`)
+    FOREIGN KEY (`cursoId`)
+    REFERENCES `foroalura`.`curso` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -109,23 +110,23 @@ ENGINE = InnoDB;
 -- Table `foroalura`.`respuesta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `foroalura`.`respuesta` (
-  `id_respuesta` BIGINT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `mensaje_respuesta` TEXT(600) NOT NULL,
-  `topico_id` BIGINT NOT NULL,
+  `topicoId` BIGINT NOT NULL,
   `fecha_respuesta` DATETIME NOT NULL,
-  `autor_respuestaId` BIGINT NOT NULL,
+  `autorId` BIGINT NOT NULL,
   `solucion` TINYINT(1) NOT NULL,
-  PRIMARY KEY (`id_respuesta`),
-  INDEX `fk_respuesta_topico_idx` (`topico_id` ASC) VISIBLE,
-  INDEX `fk_respuesta_autor_idx` (`autor_respuestaId` ASC) VISIBLE,
+  PRIMARY KEY (`id`),
+  INDEX `fk_respuesta_topico_idx` (`topicoId` ASC) VISIBLE,
+  INDEX `fk_respuesta_autor_idx` (`autorId` ASC) VISIBLE,
   CONSTRAINT `fk_respuesta_topico`
-    FOREIGN KEY (`topico_id`)
-    REFERENCES `foroalura`.`topico` (`id_topico`)
+    FOREIGN KEY (`topicoId`)
+    REFERENCES `foroalura`.`topico` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_respuesta_autor`
-    FOREIGN KEY (`autor_respuestaId`)
-    REFERENCES `foroalura`.`usuario` (`id_usuario`)
+    FOREIGN KEY (`autorId`)
+    REFERENCES `foroalura`.`usuario` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -140,8 +141,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `foroalura`;
-INSERT INTO `foroalura`.`role` (`id_role`, `nombre_role`) VALUES (1, 'ADMIN');
-INSERT INTO `foroalura`.`role` (`id_role`, `nombre_role`) VALUES (2, 'USER');
+INSERT INTO `foroalura`.`role` (`id`, `nombre_role`) VALUES (1, 'ADMIN');
+INSERT INTO `foroalura`.`role` (`id`, `nombre_role`) VALUES (2, 'USER');
 
 COMMIT;
 
@@ -151,7 +152,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `foroalura`;
-INSERT INTO `foroalura`.`usuario` (`id_usuario`, `nombre_usuario`, `apellido_usuario`, `username`, `password`, `role_id`, `activo`) VALUES (1, 'Saul', 'Wade', 'Alura', '$2a$10$ULY.xj2PL9mBK/eEjd4uqe.Wdjxp/QYbYmqoQT1.XJ0oGwaDrGohK', 1, 1);
+INSERT INTO `foroalura`.`usuario` (`id`, `nombre_usuario`, `apellido_usuario`, `username`, `password`, `roleId`, `activo`) VALUES (1, 'Saul', 'Wade', 'Alura', '$2a$10$ULY.xj2PL9mBK/eEjd4uqe.Wdjxp/QYbYmqoQT1.XJ0oGwaDrGohK', 1, 1);
 
 COMMIT;
 

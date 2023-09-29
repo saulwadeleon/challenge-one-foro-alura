@@ -29,7 +29,7 @@ public class Curso {
 	// Especifica que el valor de 'id' se generará automáticamente utilizando una
 	// estrategia de identidad.
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_curso")
+	@Column(name = "id")
 	private Long id;
 	private String nombre;
 	private Long categoriaID;

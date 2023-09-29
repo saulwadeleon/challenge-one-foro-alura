@@ -29,7 +29,7 @@ public class Categoria {
     // Especifica que el valor de 'id' se generará automáticamente utilizando una
     // estrategia de identidad.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_categoria")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "dsc_categoria", unique = true)

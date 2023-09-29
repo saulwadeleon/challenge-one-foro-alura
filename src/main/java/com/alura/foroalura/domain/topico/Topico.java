@@ -29,27 +29,30 @@ public class Topico {
 	// generará automáticamente.
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_topico")
+	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "titulo_topico")
 	private String titulo;
 
-	@Column(name = "mensaje_topico")
+	@Column(name = "mensaje_topico", columnDefinition = "TEXT")
 	private String mensaje;
 
 	@Column(name = "fecha_creacion")
 	private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-	@Column(name = "autor_topicoId")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "autorId", referencedColumnName = "id")
 	private Usuario autor;
 
-	@Column(name = "curso_Id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cursoId", referencedColumnName = "id")
 	private Curso curso;
 
 	@Column(name = "estatus_topico")
 	private StatusTopico status = StatusTopico.NO_RESPONDIDO;
 
+	@OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Respuesta> respuestas = new ArrayList<>();
 
 	public Topico(String titulo, String mensaje, Curso curso) {

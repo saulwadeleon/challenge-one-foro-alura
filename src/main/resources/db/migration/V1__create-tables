@@ -1,0 +1,108 @@
+-- Creación de la base de datos "foroalura"
+-- CREATE DATABASE IF NOT EXISTS foroalura DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- USE foroalura;
+-- Tabla "categoria"
+CREATE TABLE
+    IF NOT EXISTS categoria (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        dsc_categoria VARCHAR(45) NOT NULL,
+        PRIMARY KEY (id),
+        UNIQUE INDEX dsc_categoria_UNIQUE (dsc_categoria)
+    ) ENGINE = InnoDB;
+
+-- Tabla "curso"
+CREATE TABLE
+    IF NOT EXISTS curso (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        nombre_curso VARCHAR(200) NOT NULL,
+        categoriaId BIGINT NOT NULL,
+        PRIMARY KEY (id),
+        INDEX fk_curso_categoria_idx (categoriaId),
+        CONSTRAINT fk_curso_categoria FOREIGN KEY (categoriaId) REFERENCES categoria (id) ON DELETE RESTRICT ON UPDATE CASCADE
+    ) ENGINE = InnoDB;
+
+-- Tabla "role"
+CREATE TABLE
+    IF NOT EXISTS role (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        nombre_role VARCHAR(45) NOT NULL,
+        PRIMARY KEY (id),
+        UNIQUE INDEX nombre_role_UNIQUE (nombre_role)
+    ) ENGINE = InnoDB;
+
+-- Tabla "usuario"
+CREATE TABLE
+    IF NOT EXISTS usuario (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        nombre_usuario VARCHAR(100) NOT NULL,
+        apellido_usuario VARCHAR(150),
+        username VARCHAR(45) NOT NULL,
+        email VARCHAR(200),
+        password VARCHAR(255) NOT NULL,
+        role_id BIGINT NOT NULL,
+        activo TINYINT NOT NULL DEFAULT 0,
+        PRIMARY KEY (id),
+        INDEX fk_usuario_rol_idx (roleId),
+        UNIQUE INDEX username_UNIQUE (username),
+        CONSTRAINT fk_usuario_rol FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE RESTRICT ON UPDATE CASCADE
+    ) ENGINE = InnoDB;
+
+-- Tabla "topico"
+CREATE TABLE
+    IF NOT EXISTS topico (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        titulo_topico VARCHAR(200) NOT NULL,
+        mensaje_topico TEXT NOT NULL,
+        fecha_creacion DATETIME NOT NULL,
+        autorId BIGINT NOT NULL,
+        cursoId BIGINT NOT NULL,
+        estatus_topico VARCHAR(45) NOT NULL,
+        PRIMARY KEY (id),
+        INDEX fk_topico_autor_idx (autorId),
+        INDEX fk_topico_curso_idx (cursoId),
+        CONSTRAINT fk_topico_autor FOREIGN KEY (autorId) REFERENCES usuario (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+        CONSTRAINT fk_topico_curso FOREIGN KEY (cursoId) REFERENCES curso (id) ON DELETE RESTRICT ON UPDATE CASCADE
+    ) ENGINE = InnoDB;
+
+-- Tabla "respuesta"
+CREATE TABLE
+    IF NOT EXISTS respuesta (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        mensaje_respuesta TEXT NOT NULL,
+        topicoId BIGINT NOT NULL,
+        fecha_respuesta DATETIME NOT NULL,
+        autorId BIGINT NOT NULL,
+        solucion TINYINT NOT NULL,
+        PRIMARY KEY (id),
+        INDEX fk_respuesta_topico_idx (topicoId),
+        INDEX fk_respuesta_autor_idx (autorId),
+        CONSTRAINT fk_respuesta_topico FOREIGN KEY (topicoId) REFERENCES topico (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+        CONSTRAINT fk_respuesta_autor FOREIGN KEY (autorId) REFERENCES usuario (id) ON DELETE RESTRICT ON UPDATE CASCADE
+    ) ENGINE = InnoDB;
+
+-- Datos iniciales para la tabla "role"
+INSERT INTO
+    role (nombre_role)
+VALUES
+    ('ADMIN'),
+    ('USER');
+
+-- Datos iniciales para la tabla "usuario"
+INSERT INTO
+    usuario (
+        nombre_usuario,
+        apellido_usuario,
+        username,
+        password,
+        roleId,
+        activo
+    )
+VALUES
+    (
+        'Saul',
+        'Wade',
+        'Alura',
+        '$2a$10$ULY.xj2PL9mBK/eEjd4uqe.Wdjxp/QYbYmqoQT1.XJ0oGwaDrGohK',
+        1,
+        1
+    );

@@ -11,10 +11,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-// Define la tabla de base de datos a la que se asignará esta entidad.
-@Table(name = "role")
 // Define que esta clase es una entidad de persistencia.
 @Entity(name = "Role")
+// Define la tabla de base de datos a la que se asignará esta entidad.
+@Table(name = "role")
 // Genera automáticamente métodos getters para todos los campos de la clase.
 @Getter
 // Genera un constructor sin argumentos.
@@ -28,10 +28,8 @@ public class Role {
 
     // Marca este campo como la clave primaria de la entidad.
     @Id
-    // Especifica que el valor de 'id' se generará automáticamente utilizando una
-    // estrategia de identidad.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_usuario")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "nombre_role", unique = true)
