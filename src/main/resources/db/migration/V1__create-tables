@@ -13,10 +13,10 @@ CREATE TABLE
     IF NOT EXISTS curso (
         id BIGINT NOT NULL AUTO_INCREMENT,
         nombre_curso VARCHAR(200) NOT NULL,
-        categoriaId BIGINT NOT NULL,
+        categoria_id BIGINT NOT NULL,
         PRIMARY KEY (id),
-        INDEX fk_curso_categoria_idx (categoriaId),
-        CONSTRAINT fk_curso_categoria FOREIGN KEY (categoriaId) REFERENCES categoria (id) ON DELETE RESTRICT ON UPDATE CASCADE
+        INDEX fk_curso_categoria_idx (categoria_id),
+        CONSTRAINT fk_curso_categoria FOREIGN KEY (categoria_id) REFERENCES categoria (id) ON DELETE RESTRICT ON UPDATE CASCADE
     ) ENGINE = InnoDB;
 
 -- Tabla "role"
@@ -40,7 +40,7 @@ CREATE TABLE
         role_id BIGINT NOT NULL, -- Cambio de 'roleId' a 'role_id'
         activo TINYINT NOT NULL DEFAULT 0,
         PRIMARY KEY (id),
-        INDEX fk_usuario_rol_idx (role_id), -- Cambio de 'roleId' a 'role_id'
+        INDEX fk_usuario_role_idx (role_id), -- Cambio de 'roleId' a 'role_id'
         UNIQUE INDEX username_UNIQUE (username),
         CONSTRAINT fk_usuario_rol FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE RESTRICT ON UPDATE CASCADE
     ) ENGINE = InnoDB;
@@ -52,14 +52,14 @@ CREATE TABLE
         titulo_topico VARCHAR(200) NOT NULL,
         mensaje_topico TEXT NOT NULL,
         fecha_creacion DATETIME NOT NULL,
-        autorId BIGINT NOT NULL,
-        cursoId BIGINT NOT NULL,
+        autor_id BIGINT NOT NULL,
+        curso_id BIGINT NOT NULL,
         estatus_topico VARCHAR(45) NOT NULL,
         PRIMARY KEY (id),
-        INDEX fk_topico_autor_idx (autorId),
-        INDEX fk_topico_curso_idx (cursoId),
-        CONSTRAINT fk_topico_autor FOREIGN KEY (autorId) REFERENCES usuario (id) ON DELETE RESTRICT ON UPDATE CASCADE,
-        CONSTRAINT fk_topico_curso FOREIGN KEY (cursoId) REFERENCES curso (id) ON DELETE RESTRICT ON UPDATE CASCADE
+        INDEX fk_topico_autor_idx (autor_id),
+        INDEX fk_topico_curso_idx (curso_id),
+        CONSTRAINT fk_topico_autor FOREIGN KEY (autor_id) REFERENCES usuario (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+        CONSTRAINT fk_topico_curso FOREIGN KEY (curso_id) REFERENCES curso (id) ON DELETE RESTRICT ON UPDATE CASCADE
     ) ENGINE = InnoDB;
 
 -- Tabla "respuesta"
@@ -67,15 +67,15 @@ CREATE TABLE
     IF NOT EXISTS respuesta (
         id BIGINT NOT NULL AUTO_INCREMENT,
         mensaje_respuesta TEXT NOT NULL,
-        topicoId BIGINT NOT NULL,
+        topico_id BIGINT NOT NULL,
         fecha_respuesta DATETIME NOT NULL,
-        autorId BIGINT NOT NULL,
+        autor_id BIGINT NOT NULL,
         solucion TINYINT NOT NULL,
         PRIMARY KEY (id),
-        INDEX fk_respuesta_topico_idx (topicoId),
-        INDEX fk_respuesta_autor_idx (autorId),
-        CONSTRAINT fk_respuesta_topico FOREIGN KEY (topicoId) REFERENCES topico (id) ON DELETE RESTRICT ON UPDATE CASCADE,
-        CONSTRAINT fk_respuesta_autor FOREIGN KEY (autorId) REFERENCES usuario (id) ON DELETE RESTRICT ON UPDATE CASCADE
+        INDEX fk_respuesta_topico_idx (topico_id),
+        INDEX fk_respuesta_autor_idx (autor_id),
+        CONSTRAINT fk_respuesta_topico FOREIGN KEY (topico_id) REFERENCES topico (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+        CONSTRAINT fk_respuesta_autor FOREIGN KEY (autor_id) REFERENCES usuario (id) ON DELETE RESTRICT ON UPDATE CASCADE
     ) ENGINE = InnoDB;
 
 -- Datos iniciales para la tabla "role"
@@ -90,6 +90,7 @@ INSERT INTO
     usuario (
         nombre_usuario,
         apellido_usuario,
+        email,
         username,
         password,
         role_id, -- Cambio de 'roleId' a 'role_id'
@@ -99,6 +100,7 @@ VALUES
     (
         'Saul',
         'Wade',
+        'saul.wade@gmail.com',
         'Alura',
         'saul@wade.mx',
         '$2a$10$ULY.xj2PL9mBK/eEjd4uqe.Wdjxp/QYbYmqoQT1.XJ0oGwaDrGohK',
