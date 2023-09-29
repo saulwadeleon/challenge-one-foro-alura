@@ -14,6 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * 
+ * Esta clase configura la seguridad de tu aplicación Spring. Define reglas de
+ * autorización para diferentes rutas y configura cómo se maneja la
+ * autenticación. También se deshabilita la protección CSRF y se establece la
+ * política de creación de sesiones como "sin estado". Esto es común en
+ * aplicaciones modernas basadas en tokens JWT.
+ * 
+ */
 @Configuration
 @EnableWebSecurity
 @SuppressWarnings("all")
@@ -22,11 +31,9 @@ public class SecurityConfigurations {
     @Autowired
     private SecurityFilter securityFilter;
 
-    // Configuración de la cadena de filtros de seguridad
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable()) // Deshabilitar protección CSRF
+        return http.csrf(csrf -> csrf.disable()) // Deshabilitar protección CSRF
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(requests -> requests // Comenzar la configuración de reglas de autorización
                         // Permitir todas las solicitudes POST a "/login" sin autenticación
@@ -50,15 +57,13 @@ public class SecurityConfigurations {
                 .build(); // Finalizar la configuración y construir la cadena de filtros de seguridad
     }
 
-    // Configuración del administrador de autenticación
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
-    // Configuración del codificador de contraseñas (BCrypt)
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); // Configurar el codificador de contraseñas (BCrypt)
     }
 }

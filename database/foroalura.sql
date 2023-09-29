@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `foroalura`.`usuario` (
   `role_id` BIGINT NOT NULL,
   `activo` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  INDEX `fk_usuario_rol_idx` (`role_id` ASC) VISIBLE,
+  INDEX `fk_usuario_role_idx` (`role_id` ASC) VISIBLE,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
   CONSTRAINT `fk_usuario_rol`
     FOREIGN KEY (`role_id`)

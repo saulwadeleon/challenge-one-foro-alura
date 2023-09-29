@@ -10,9 +10,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
-    // Método para buscar categorias por nombre
-    List<Categoria> findByNombre(String nombre);
+    // Método para buscar categorias por descripcion
+    List<Categoria> findByDescripcion(String descripcion);
 
-    // Método para buscar categorias por nombre que contenga una cadena específica
-    List<Categoria> findByNombreContaining(String fragmentoNombre);
+    // Método para buscar categorias por descripcion que contenga una cadena
+    // específica
+    List<Categoria> findByDescripcionContaining(String fragmentoDescripcion);
 }

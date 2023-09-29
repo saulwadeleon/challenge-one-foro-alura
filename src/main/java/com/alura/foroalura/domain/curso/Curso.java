@@ -31,12 +31,16 @@ public class Curso {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	private String nombre;
-	private Long categoriaID;
 
-	public Curso(String nombre, Long categoriaID) {
+	@Column(name = "nombre_curso")
+	private String nombre;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "categoria_id", referencedColumnName = "id")
+	private Categoria categoria;
+
+	public Curso(String nombre) {
 		this.nombre = nombre;
-		this.categoriaID = categoriaID;
 	}
 
 	public Long getId() {
@@ -55,8 +59,12 @@ public class Curso {
 		this.nombre = nombre;
 	}
 
-	public Long getCategoriaId() {
-		return categoriaID;
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 }

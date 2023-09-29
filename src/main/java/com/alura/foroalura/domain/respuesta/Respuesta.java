@@ -33,14 +33,14 @@ public class Respuesta {
 	private String mensaje;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "topicoId", referencedColumnName = "id")
+	@JoinColumn(name = "topico_id", referencedColumnName = "id")
 	private Topico topico;
 
 	@Column(name = "fecha_respuesta")
 	private LocalDateTime fechaCreacion = LocalDateTime.now();
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "autorId", referencedColumnName = "id")
+	@JoinColumn(name = "autor_id", referencedColumnName = "id")
 	private Usuario autor;
 
 	@Column(name = "solucion")

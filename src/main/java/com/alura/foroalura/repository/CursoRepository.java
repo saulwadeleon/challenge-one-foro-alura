@@ -13,10 +13,10 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
     List<Curso> findByNombre(String nombre);
 
     // Método para buscar cursos por categoría
-    List<Curso> findByCategoriaID(Long categoriaID);
+    List<Curso> findByCategoriaId(Long categoriaId);
 
     // Método para buscar cursos por nombre y categoría
-    List<Curso> findByNombreAndCategoriaID(String nombre, Long categoriaID);
+    List<Curso> findByNombreAndCategoriaId(String nombre, Long categoriaId);
 
     // Método para buscar cursos por nombre que contenga una cadena específica
     List<Curso> findByNombreContaining(String fragmentoNombre);

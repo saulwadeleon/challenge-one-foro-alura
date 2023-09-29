@@ -69,7 +69,7 @@ public class Usuario implements UserDetails {
 	private String password;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "role_id")
+	@JoinColumn(name = "role_id", referencedColumnName = "id")
 	private Role role;
 
 	// private List<Role> roles;
@@ -177,7 +177,7 @@ public class Usuario implements UserDetails {
 	}
 
 	public String[] getRole() {
-		return new String[] { "ROLE_" + role.getNombre() };
+		return new String[] { "ROLE_" + this.role.getNombre() };
 	}
 
 	public String getLogin() {

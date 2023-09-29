@@ -39,7 +39,7 @@ public class CategoriaService {
         if (categoriaExistente != null) {
             // Actualizar los campos relevantes de la categoría existente con los datos de
             // la categoría actualizada
-            categoriaExistente.setNombre(categoriaActualizada.getNombre());
+            categoriaExistente.setDescripcion(categoriaActualizada.getDescripcion());
             return categoriaRepository.save(categoriaExistente);
         }
         return null; // Retornar null si la categoría no se encuentra

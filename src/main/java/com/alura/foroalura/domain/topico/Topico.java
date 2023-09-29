@@ -42,11 +42,11 @@ public class Topico {
 	private LocalDateTime fechaCreacion = LocalDateTime.now();
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "autorId", referencedColumnName = "id")
+	@JoinColumn(name = "autor_id", referencedColumnName = "id")
 	private Usuario autor;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cursoId", referencedColumnName = "id")
+	@JoinColumn(name = "curso_id", referencedColumnName = "id")
 	private Curso curso;
 
 	@Column(name = "estatus_topico")

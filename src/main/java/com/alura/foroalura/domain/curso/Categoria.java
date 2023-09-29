@@ -26,18 +26,12 @@ public class Categoria {
 
     // Marca este campo como la clave primaria de la entidad.
     @Id
-    // Especifica que el valor de 'id' se generará automáticamente utilizando una
-    // estrategia de identidad.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "dsc_categoria", unique = true)
-    private String nombre;
-
-    public Categoria(String nombre) {
-        this.nombre = nombre;
-    }
+    private String descripcion;
 
     public Long getId() {
         return id;
@@ -47,12 +41,12 @@ public class Categoria {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
 }

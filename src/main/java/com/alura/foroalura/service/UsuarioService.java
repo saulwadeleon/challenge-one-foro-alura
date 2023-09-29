@@ -47,7 +47,7 @@ public class UsuarioService {
             usuarioExistente.setNombre(usuarioActualizado.getNombre());
             usuarioExistente.setApellido(usuarioActualizado.getApellido());
             usuarioExistente.setEmail(usuarioActualizado.getEmail());
-            usuarioExistente.setLogin(usuarioActualizado.getLogin());
+            usuarioExistente.setLogin(usuarioActualizado.getUsername());
 
             // Si deseas actualizar la contraseña, encripta la nueva contraseña
             if (usuarioActualizado.getPassword() != null && !usuarioActualizado.getPassword().isEmpty()) {
