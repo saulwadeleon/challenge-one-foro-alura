@@ -1,27 +1,65 @@
 package com.alura.foroalura.service;
 
+import com.alura.foroalura.domain.curso.Curso;
+import com.alura.foroalura.domain.topico.DatosActualizacionTopico;
+import com.alura.foroalura.domain.topico.DatosRegistroTopico;
 import com.alura.foroalura.domain.topico.Topico;
+import com.alura.foroalura.domain.usuario.Usuario;
+import com.alura.foroalura.infra.exception.RegistroDuplicadoException;
 import com.alura.foroalura.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * 
+ * La clase TopicoService proporciona una capa de servicio que encapsula la
+ * lógica de negocio relacionada con la entidad Topico. Esta clase contiene
+ * métodos para crear, leer, actualizar y eliminar tópicos. También se encarga
+ * de realizar operaciones adicionales si es necesario, como validaciones antes
+ * de guardar un tópico o realizar actualizaciones en un tópico existente.
+ * 
+ */
 @Service
 public class TopicoService {
 
     @Autowired
     private final TopicoRepository topicoRepository;
 
-    public TopicoService(TopicoRepository topicoRepository) {
+    @Autowired
+    private final UsuarioService usuarioService;
+
+    @Autowired
+    private final CursoService cursoService;
+
+    public TopicoService(TopicoRepository topicoRepository, UsuarioService usuarioService, CursoService cursoService) {
         this.topicoRepository = topicoRepository;
+        this.usuarioService = usuarioService;
+        this.cursoService = cursoService;
     }
 
     // Método para crear un nuevo tópico
-    public Topico crearTopico(Topico topico) {
-        // Puedes realizar validaciones u operaciones adicionales aquí antes de guardar
-        // el tópico en la base de datos.
-        return topicoRepository.save(topico);
+    public Topico crearTopico(DatosRegistroTopico datosRegistroTopico) {
+        // Validar que no existan registros duplicados con el mismo título y mensaje
+        if (topicoRepository.existsByTituloAndMensaje(datosRegistroTopico.titulo(),
+                datosRegistroTopico.mensaje())) {
+            throw new RegistroDuplicadoException("Ya existe un tópico con el mismo título y mensaje.");
+        }
+
+        // Obtener el autor y curso basado en los datos proporcionados
+        Usuario autor = usuarioService.obtenerUsuarioPorNombre(datosRegistroTopico.autor());
+        Curso curso = cursoService.obtenerCursoPorNombre(datosRegistroTopico.curso());
+
+        // Crear el nuevo tópico
+        Topico nuevoTopico = new Topico(datosRegistroTopico, curso, autor);
+
+        // Topico nuevoTopico = new Topico(datosRegistroTopico.titulo(),
+        // datosRegistroTopico.mensaje(), curso,
+        // autor);
+
+        return topicoRepository.save(nuevoTopico);
     }
 
     // Método para obtener todos los tópicos
@@ -35,14 +73,20 @@ public class TopicoService {
     }
 
     // Método para actualizar un tópico por su ID
-    public Topico actualizarTopico(Long id, Topico topicoActualizado) {
+    public Topico actualizarTopico(Long id, DatosActualizacionTopico topicoActualizado) {
         Topico topicoExistente = obtenerTopicoPorId(id);
         if (topicoExistente != null) {
+            // Obtener el autor y curso basado en los datos proporcionados
+            Usuario autor = usuarioService.obtenerUsuarioPorNombre(topicoActualizado.autor());
+            Curso curso = cursoService.obtenerCursoPorNombre(topicoActualizado.curso());
+
             // Actualizar los campos relevantes del tópico existente con los datos del
             // tópico actualizado
-            topicoExistente.setTitulo(topicoActualizado.getTitulo());
-            topicoExistente.setMensaje(topicoActualizado.getMensaje());
-            // Puedes realizar más actualizaciones aquí según tus necesidades.
+            topicoExistente.setMensaje(topicoActualizado.mensaje());
+            topicoExistente.setAutor(autor);
+            topicoExistente.setCurso(curso);
+            topicoExistente.setEstatus(topicoActualizado.estatus());
+            topicoExistente.setFecha(LocalDateTime.now());
 
             return topicoRepository.save(topicoExistente);
         }

@@ -1,6 +1,9 @@
 package com.alura.foroalura.domain.curso;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +14,7 @@ import lombok.NoArgsConstructor;
 // Anotación para marcar esta clase como una entidad JPA.
 @Entity(name = "Curso")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 // Utilizada para generar el método equals y hashCode basado en el campo 'id'.
 @EqualsAndHashCode(of = "id")
@@ -35,6 +38,7 @@ public class Curso {
 	@Column(name = "nombre_curso")
 	private String nombre;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoria_id", referencedColumnName = "id")
 	private Categoria categoria;

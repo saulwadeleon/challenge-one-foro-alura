@@ -10,7 +10,7 @@ import java.util.List;
 public interface CursoRepository extends JpaRepository<Curso, Long> {
 
     // Método para buscar cursos por nombre
-    List<Curso> findByNombre(String nombre);
+    Curso findByNombre(String nombre);
 
     // Método para buscar cursos por categoría
     List<Curso> findByCategoriaId(Long categoriaId);

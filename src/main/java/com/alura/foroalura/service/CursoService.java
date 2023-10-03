@@ -50,4 +50,8 @@ public class CursoService {
     public void eliminarCurso(Long id) {
         cursoRepository.deleteById(id);
     }
+
+    public Curso obtenerCursoPorNombre(String curso) {
+        return cursoRepository.findByNombre(curso);
+    }
 }

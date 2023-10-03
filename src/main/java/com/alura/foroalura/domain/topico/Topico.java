@@ -1,14 +1,14 @@
 package com.alura.foroalura.domain.topico;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.alura.foroalura.domain.curso.Curso;
-import com.alura.foroalura.domain.respuesta.Respuesta;
 import com.alura.foroalura.domain.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,8 +18,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "topico")
 // Anotación para marcar esta clase como una entidad JPA.
 @Entity(name = "Topico")
+@JsonIgnoreProperties({ "hibernateLazyInitializer" })
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 // Utilizada para generar el método equals y hashCode basado en el campo 'id'.
 @EqualsAndHashCode(of = "id")
@@ -39,26 +40,28 @@ public class Topico {
 	private String mensaje;
 
 	@Column(name = "fecha_creacion")
-	private LocalDateTime fechaCreacion = LocalDateTime.now();
+	private LocalDateTime fecha = LocalDateTime.now();
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "autor_id", referencedColumnName = "id")
 	private Usuario autor;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "curso_id", referencedColumnName = "id")
 	private Curso curso;
 
 	@Column(name = "estatus_topico")
-	private StatusTopico status = StatusTopico.NO_RESPONDIDO;
+	@Enumerated(EnumType.STRING)
+	private StatusTopico estatus;
 
-	@OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Respuesta> respuestas = new ArrayList<>();
-
-	public Topico(String titulo, String mensaje, Curso curso) {
-		this.titulo = titulo;
-		this.mensaje = mensaje;
+	public Topico(DatosRegistroTopico datosRegistroTopico, Curso curso, Usuario autor) {
+		this.titulo = datosRegistroTopico.titulo();
+		this.mensaje = datosRegistroTopico.mensaje();
 		this.curso = curso;
+		this.autor = autor;
+		this.estatus = datosRegistroTopico.estatus();
 	}
 
 	public Long getId() {
@@ -85,20 +88,20 @@ public class Topico {
 		this.mensaje = mensaje;
 	}
 
-	public LocalDateTime getfechaCreacion() {
-		return fechaCreacion;
+	public LocalDateTime getFecha() {
+		return fecha;
 	}
 
-	public void setfechaCreacion(LocalDateTime fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
+	public void setFecha(LocalDateTime fechaCreacion) {
+		this.fecha = fechaCreacion;
 	}
 
-	public StatusTopico getStatus() {
-		return status;
+	public StatusTopico getEstatus() {
+		return estatus;
 	}
 
-	public void setStatus(StatusTopico status) {
-		this.status = status;
+	public void setEstatus(StatusTopico estatus) {
+		this.estatus = estatus;
 	}
 
 	public Usuario getAutor() {
@@ -117,12 +120,14 @@ public class Topico {
 		this.curso = curso;
 	}
 
-	public List<Respuesta> getRespuestas() {
-		return respuestas;
-	}
-
-	public void setRespuestas(List<Respuesta> respuestas) {
-		this.respuestas = respuestas;
-	}
+	/*
+	 * public List<Respuesta> getRespuestas() {
+	 * return respuestas;
+	 * }
+	 * 
+	 * public void setRespuestas(List<Respuesta> respuestas) {
+	 * this.respuestas = respuestas;
+	 * }
+	 */
 
 }

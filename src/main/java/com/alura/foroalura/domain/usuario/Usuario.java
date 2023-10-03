@@ -89,6 +89,15 @@ public class Usuario implements UserDetails {
 		// Inicializa otros atributos si es necesario
 	}
 
+	public Usuario(DatosRegistroUsuario datosRegistroUsuario, Role roleID) {
+		this.nombre = datosRegistroUsuario.nombre();
+		this.apellido = datosRegistroUsuario.apellido();
+		this.email = datosRegistroUsuario.email();
+		this.username = datosRegistroUsuario.username();
+		this.password = datosRegistroUsuario.password();
+		this.role = roleID;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -170,18 +179,30 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
-	// Indica si la cuenta del usuario está habilitada (siempre devuelve true).
+	// Indica si la cuenta del usuario está habilitada.
 	@Override
 	public boolean isEnabled() {
-		return true;
+		if (this.activo) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-	public String[] getRole() {
-		return new String[] { "ROLE_" + this.role.getNombre() };
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 
-	public String getLogin() {
-		return this.username;
+	public String getRoleName() {
+		return this.role.getNombre();
+	}
+
+	public Long getRoleId() {
+		return this.role.getId();
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 }

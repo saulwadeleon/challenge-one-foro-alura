@@ -12,4 +12,6 @@ public interface TopicoRepository extends JpaRepository<Topico, Long> {
 
     // Lista todos los topicos que contengan cierto fragmento en el título
     List<Topico> findByTituloContaining(String fragmentoTitulo);
+
+    boolean existsByTituloAndMensaje(String titulo, String mensaje);
 }

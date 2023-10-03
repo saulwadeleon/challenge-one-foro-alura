@@ -33,18 +33,30 @@ public class Role {
     private Long id;
 
     @Column(name = "nombre_role", unique = true)
-    private String nombre_role;
+    private String nombreRole;
+
+    public Role(String nombreRole) {
+        this.nombreRole = nombreRole;
+    }
+
+    public Role(Long roleId) {
+        this.id = roleId;
+    }
 
     public Long getId() {
         return id;
     }
 
     public String getNombre() {
-        return nombre_role;
+        return nombreRole;
     }
 
-    public void setNombre(String bombreRole) {
-        this.nombre_role = bombreRole;
+    public void setNombre(String nombreRole) {
+        this.nombreRole = nombreRole;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.id = roleId;
     }
 
 }
