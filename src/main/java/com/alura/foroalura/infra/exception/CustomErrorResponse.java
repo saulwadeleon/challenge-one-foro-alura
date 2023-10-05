@@ -1,5 +1,15 @@
 package com.alura.foroalura.infra.exception;
 
+/**
+ * la clase CustomErrorResponse se utiliza para encapsular información sobre
+ * errores en la aplicación, incluyendo el código de error, el mensaje de error
+ * y una marca de tiempo. Esto permite una respuesta personalizada cuando se
+ * produce un error y facilita la comunicación de detalles del error al cliente
+ * de la aplicación.
+ * 
+ * @author Saúl Wade León
+ * @version 1.3
+ */
 public class CustomErrorResponse {
     private int errorCode;
     private String errorMessage;

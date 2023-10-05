@@ -9,6 +9,8 @@ package com.alura.foroalura.infra.exception;
  * ser útil en situaciones donde se necesita manejar errores específicos de
  * conflicto.
  * 
+ * @author Saúl Wade León
+ * @version 1.3
  */
 // Clase que representa una excepción de conflicto personalizada.
 public class ConflictException extends RuntimeException {

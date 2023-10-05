@@ -11,6 +11,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * La clase Role se utiliza para representar roles de usuario en el sistema y se
+ * mapea a una tabla en la base de datos. Cada rol tiene un identificador único
+ * (id) y un nombre de rol (nombreRole). Esta clase facilita la gestión de roles
+ * de usuario en la aplicación.
+ * 
+ * @author Saúl Wade León
+ * @version 1.3
+ */
 // Define que esta clase es una entidad de persistencia.
 @Entity(name = "Role")
 // Define la tabla de base de datos a la que se asignará esta entidad.
@@ -55,7 +64,7 @@ public class Role {
         this.nombreRole = nombreRole;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setId(Long roleId) {
         this.id = roleId;
     }
 

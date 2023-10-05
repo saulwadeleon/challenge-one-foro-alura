@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
  * nombre de usuario y devuelve un objeto UserDetails, que se utiliza en el
  * proceso de autenticación de Spring Security.
  * 
+ * @author Saúl Wade León
+ * @version 1.3
  */
 @Service
 public class AutenticacionService implements UserDetailsService {

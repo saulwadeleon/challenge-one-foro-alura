@@ -22,6 +22,18 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 
+ * Esta clase representa un usuario en una aplicación Spring Security.
+ * Implementa la interfaz UserDetails para proporcionar información necesaria
+ * para la autenticación y la autorización. Además, utiliza anotaciones de
+ * persistencia para mapear la entidad a una tabla de base de datos y aprovecha
+ * las capacidades de Lombok para reducir la cantidad de código boilerplate
+ * necesario.
+ * 
+ * @author Saúl Wade León
+ * @version 1.3
+ */
 // Define la tabla de base de datos a la que se asignará esta entidad.
 @Table(name = "usuario")
 // Define que esta clase es una entidad de persistencia.
@@ -35,16 +47,6 @@ import lombok.NoArgsConstructor;
 // Genera automáticamente los métodos equals y hashCode basados en el campo
 // 'id'.
 @EqualsAndHashCode(of = "id")
-/**
- * 
- * Esta clase representa un usuario en una aplicación Spring Security.
- * Implementa la interfaz UserDetails para proporcionar información necesaria
- * para la autenticación y la autorización. Además, utiliza anotaciones de
- * persistencia para mapear la entidad a una tabla de base de datos y aprovecha
- * las capacidades de Lombok para reducir la cantidad de código boilerplate
- * necesario.
- * 
- */
 public class Usuario implements UserDetails {
 
 	// Marca este campo como la clave primaria de la entidad.

@@ -14,7 +14,18 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-// Anotación para mapear la entidad 'Topico' a una tabla llamada 'topico' en la base de datos.
+/**
+ * Esta clase se utiliza para representar un tópico en el sistema del foro
+ * Alura. Cada instancia de esta clase representa un tópico con sus atributos y
+ * métodos asociados, con campos que incluyen título, mensaje, fecha de
+ * creación, autor, curso, estado y número de respuestas. Esta clase se utiliza
+ * para administrar y mantener información sobre los tópicos en el sistema.
+ * 
+ * @author Saúl Wade León
+ * @version 1.3
+ */
+// Anotación para mapear la entidad 'Topico' a una tabla llamada 'topico' en la
+// base de datos.
 @Table(name = "topico")
 // Anotación para marcar esta clase como una entidad JPA.
 @Entity(name = "Topico")
@@ -43,12 +54,12 @@ public class Topico {
 	private LocalDateTime fecha = LocalDateTime.now();
 
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "autor_id", referencedColumnName = "id")
 	private Usuario autor;
 
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "curso_id", referencedColumnName = "id")
 	private Curso curso;
 
@@ -56,13 +67,8 @@ public class Topico {
 	@Enumerated(EnumType.STRING)
 	private StatusTopico estatus;
 
-	public Topico(DatosRegistroTopico datosRegistroTopico, Curso curso, Usuario autor) {
-		this.titulo = datosRegistroTopico.titulo();
-		this.mensaje = datosRegistroTopico.mensaje();
-		this.curso = curso;
-		this.autor = autor;
-		this.estatus = datosRegistroTopico.estatus();
-	}
+	@Column(name = "num_respuestas") // Nuevo campo para el número de respuestas
+	private int numRespuestas;
 
 	public Long getId() {
 		return id;
@@ -120,14 +126,74 @@ public class Topico {
 		this.curso = curso;
 	}
 
-	/*
-	 * public List<Respuesta> getRespuestas() {
-	 * return respuestas;
-	 * }
-	 * 
-	 * public void setRespuestas(List<Respuesta> respuestas) {
-	 * this.respuestas = respuestas;
-	 * }
+	public int getNumRespuestas() {
+		return numRespuestas;
+	}
+
+	public void setNumRespuestas(int numRespuestas) {
+		this.numRespuestas = numRespuestas;
+	}
+
+	/**
+	 * TopicoBuilder: Esta es una clase interna utilizada para construir objetos
+	 * Topico de manera fluida. Permite establecer los valores de los campos de un
+	 * tópico de forma encadenada.
 	 */
+	public static class TopicoBuilder {
+		private String titulo;
+		private String mensaje;
+		private LocalDateTime fecha;
+		private Curso curso;
+		private Usuario autor;
+		private StatusTopico estatus;
+		private int numRespuestas; // Nuevo campo para el número de respuestas
+
+		public TopicoBuilder titulo(String titulo) {
+			this.titulo = titulo;
+			return this;
+		}
+
+		public TopicoBuilder mensaje(String mensaje) {
+			this.mensaje = mensaje;
+			return this;
+		}
+
+		public TopicoBuilder curso(Curso curso) {
+			this.curso = curso;
+			return this;
+		}
+
+		public TopicoBuilder autor(Usuario autor) {
+			this.autor = autor;
+			return this;
+		}
+
+		public TopicoBuilder estatus(StatusTopico estatus) {
+			this.estatus = estatus;
+			return this;
+		}
+
+		// Nuevo método para establecer el número de respuestas
+		public TopicoBuilder numRespuestas(int numeroRespuestas) {
+			this.numRespuestas = numeroRespuestas;
+			return this;
+		}
+
+		// Método para construir un objeto Topico
+		public Topico build() {
+			// Aquí se construye y retorna la instancia de Topico con los datos establecidos
+			Topico topico = new Topico();
+			topico.setTitulo(this.titulo);
+			topico.setMensaje(this.mensaje);
+			topico.setFecha(this.fecha);
+			topico.setCurso(this.curso);
+			topico.setAutor(this.autor);
+			topico.setEstatus(this.estatus);
+			// Establecer el número de respuestas
+			topico.setNumRespuestas(this.numRespuestas);
+
+			return topico;
+		}
+	}
 
 }

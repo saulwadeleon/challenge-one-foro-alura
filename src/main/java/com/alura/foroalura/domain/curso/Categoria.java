@@ -21,6 +21,8 @@ import lombok.NoArgsConstructor;
  * básicos y proporciona métodos para administrar y actualizar esos datos. Esta
  * clase es esencial para la clase Curso en el sistema del foro Alura.
  * 
+ * @author Saúl Wade León
+ * @version 1.3
  */
 public class Categoria {
 

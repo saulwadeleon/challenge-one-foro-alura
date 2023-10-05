@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "foroalura.security.secret",
-  "type": "java.lang.String",
-  "description": "A description for 'foroalura.security.secret'"
-}]}
+{"properties": [
+  {
+    "name": "foroalura.security.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'foroalura.security.secret'"
+  },
+  {
+    "name": "spring.jackson.fail-on-empty-beans",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jackson.fail-on-empty-beans'"
+  }
+]}

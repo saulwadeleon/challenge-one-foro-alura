@@ -1,5 +1,11 @@
 package com.alura.foroalura.domain.usuario;
 
+/**
+ * La clase DatosDelUsuario representa los datos de un usuario en el sistema.
+ * 
+ * @author Saúl Wade León
+ * @version 1.3
+ */
 public record DatosDelUsuario(
                 Long id,
                 String nombre,

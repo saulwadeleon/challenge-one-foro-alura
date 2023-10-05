@@ -7,6 +7,8 @@ package com.alura.foroalura.infra.security;
  * facilita la creación y el uso de objetos DatosJWTToken inmutables para
  * representar tokens JWT en su aplicación.
  * 
+ * @author Saúl Wade León
+ * @version 1.3
  */
 public record DatosJWTToken(String jWTToken) {
 

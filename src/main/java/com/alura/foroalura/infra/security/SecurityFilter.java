@@ -21,6 +21,8 @@ import java.io.IOException;
  * contexto de seguridad de Spring Security para que las solicitudes posteriores
  * estén autenticadas correctamente.
  * 
+ * @author Saúl Wade León
+ * @version 1.3
  */
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -30,6 +32,18 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    /**
+     * El método doFilterInternal se ejecuta en cada solicitud HTTP. Aquí se realiza
+     * el proceso de autenticación y autorización.
+     * 
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     * @throws Exception
+     * 
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

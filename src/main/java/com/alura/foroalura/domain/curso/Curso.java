@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-// Anotación para mapear la entidad 'Topico' a una tabla llamada 'topico' en la base de datos.
+// Anotación para mapear la entidad 'Curso' a una tabla llamada 'curso' en la base de datos.
 @Table(name = "curso")
 // Anotación para marcar esta clase como una entidad JPA.
 @Entity(name = "Curso")
@@ -20,10 +20,11 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of = "id")
 /**
  * 
- * la clase Topico representa la entidad de un topico con sus atributos básicos
- * y proporciona métodos para administrar y actualizar esos datos. Esta clase es
- * esencial en un sistema del foro.
+ * la clase Curso representa la entidad de un curso con sus atributos básicos
+ * y proporciona métodos para administrar y actualizar esos datos.
  * 
+ * @author Saúl Wade León
+ * @version 1.3
  */
 public class Curso {
 
@@ -39,7 +40,7 @@ public class Curso {
 	private String nombre;
 
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoria_id", referencedColumnName = "id")
 	private Categoria categoria;
 

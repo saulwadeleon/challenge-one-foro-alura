@@ -16,6 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 
+ * Esta clase es un controlador de Spring que maneja las solicitudes
+ * relacionadas con la autenticación de usuarios en la aplicación. Proporciona
+ * un endpoint para autenticar a los usuarios y generar tokens JWT después de la
+ * autenticación.
+ * 
+ */
 @RestController
 @RequestMapping("/login")
 public class AutenticacionController {
@@ -26,6 +34,15 @@ public class AutenticacionController {
     @Autowired
     private TokenService tokenService;
 
+    /**
+     * 
+     * Este método maneja las solicitudes POST en la ruta "/login" y se encarga de
+     * autenticar a los usuarios utilizando el AuthenticationManager de Spring
+     * Security.
+     * 
+     * @param datosAutenticacionUsuario
+     * @return
+     */
     @PostMapping
     public ResponseEntity<?> autenticarUsuario(
             @RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {

@@ -1,6 +1,12 @@
 package com.alura.foroalura.domain.usuario;
 
-// Un registro (record) que representa los datos para actualizar del usuario
+/**
+ * Esta clase se utiliza para encapsular los datos que se pueden utilizar para
+ * actualizar un usuario existente en el sistema.
+ * 
+ * @author Saúl Wade León
+ * @version 1.3
+ */
 public record DatosActualizacionUsuario(
                 String nombre,
                 String apellido,

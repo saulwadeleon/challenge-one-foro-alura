@@ -8,6 +8,8 @@ package com.alura.foroalura.domain.usuario;
  * toString basados en los componentes, y es inmutable, lo que significa que una
  * vez que se crea una instancia, sus valores no pueden modificarse.
  * 
+ * @author Saúl Wade León
+ * @version 1.3
  */
 public record DatosAutenticacionUsuario(String username, String password) {
 }

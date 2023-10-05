@@ -12,6 +12,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * UsuarioService proporciona métodos para gestionar usuarios de la aplicación,
+ * incluyendo la creación, obtención, actualización y eliminación de usuarios,
+ * así como la gestión de su activación y desactivación. También verifica la
+ * existencia de roles y nombres de usuario, y garantiza la encriptación
+ * adecuada de las contraseñas antes de guardarlas en la base de datos.
+ * 
+ * @author Saúl Wade León
+ * @version 1.3
+ */
 @Service
 public class UsuarioService {
 
@@ -30,7 +40,18 @@ public class UsuarioService {
         this.roleRepository = roleRepository;
     }
 
-    // Método para crear un nuevo usuario
+    /**
+     * crearUsuario permite crear un nuevo usuario. Realiza las siguientes acciones:
+     * Verifica si ya existe un usuario con el mismo nombre de usuario (username).
+     * Si existe, lanza una excepción.
+     * Encripta la contraseña proporcionada en el usuario antes de guardarla en la
+     * base de datos.
+     * Guarda el usuario en la base de datos utilizando el repositorio
+     * (usuarioRepository).
+     * 
+     * @param usuario
+     * @return
+     */
     public Usuario crearUsuario(Usuario usuario) {
         // Encriptar la contraseña antes de guardarla en la base de datos
         if (usuarioRepository.existsByUsername(usuario.getUsername())) {
@@ -41,17 +62,36 @@ public class UsuarioService {
         }
     }
 
-    // Método para obtener todos los usuarios
+    /**
+     * obtenerTodosLosUsuarios devuelve una lista de todos los usuarios almacenados
+     * en la base de datos. Utiliza el método findAll() proporcionado por el
+     * repositorio.
+     * 
+     * @return
+     */
     public List<Usuario> obtenerTodosLosUsuarios() {
         return usuarioRepository.findAll();
     }
 
-    // Método para obtener un usuario por su ID
+    /**
+     * obtenerUsuarioPorId permite obtener un usuario específico por su
+     * identificador (id). Utiliza el método findById(id) del repositorio y retorna
+     * el usuario si se encuentra; de lo contrario, retorna null.
+     * 
+     * @param id
+     * @return
+     */
     public Usuario obtenerUsuarioPorId(Long id) {
         return usuarioRepository.findById(id).orElse(null);
     }
 
-    // Método para actualizar un usuario por su ID
+    /**
+     * actualizarUsuario actualiza un usuario existente por su identificador (id).
+     * 
+     * @param id
+     * @param usuarioActualizado
+     * @return
+     */
     public Usuario actualizarUsuario(Long id, Usuario usuarioActualizado) {
         // Validar que el rol especificado exista en el catálogo de roles
         Role role = roleRepository.findByNombreRole(usuarioActualizado.getRoleName());
@@ -91,7 +131,12 @@ public class UsuarioService {
         return null; // Retornar null si el usuario no se encuentra
     }
 
-    // Método para eliminar un usuario por su ID
+    /**
+     * eliminarUsuario permite eliminar un usuario por su identificador (id).
+     * Verifica si el usuario existe en la base de datos antes de eliminarlo.
+     * 
+     * @param id
+     */
     public void eliminarUsuario(Long id) {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
@@ -100,7 +145,12 @@ public class UsuarioService {
         }
     }
 
-    // Método para desactivar un usuario por su ID (borrado lógico)
+    /**
+     * desactivarUsuario desactiva (realiza un borrado lógico) un usuario por su
+     * identificador (id) estableciendo el campo activo en false.
+     * 
+     * @param id
+     */
     public void desactivarUsuario(Long id) {
         Usuario usuarioExistente = obtenerUsuarioPorId(id);
         if (usuarioExistente != null) {
@@ -109,7 +159,12 @@ public class UsuarioService {
         }
     }
 
-    // Método para activar un usuario por su ID
+    /**
+     * activarUsuario activa un usuario por su identificador (id) estableciendo el
+     * campo activo en true.
+     * 
+     * @param id
+     */
     public void activarUsuario(Long id) {
         Usuario usuarioExistente = obtenerUsuarioPorId(id);
         if (usuarioExistente != null) {
@@ -118,20 +173,57 @@ public class UsuarioService {
         }
     }
 
+    /**
+     * existeUsuarioPorUsername verifica si existe un usuario en la base de datos
+     * con el nombre de usuario (username) proporcionado.
+     * 
+     * @param username
+     * @return
+     */
     public boolean existeUsuarioPorUsername(String username) {
         return usuarioRepository.existsByUsername(username);
     }
 
+    /**
+     * existeRole verifica si existe un rol con el nombre proporcionado en el
+     * catálogo de roles.
+     * 
+     * @param role
+     * @return
+     */
     public boolean existeRole(String role) {
         return roleRepository.existsByNombreRole(role);
     }
 
+    /**
+     * obtenerUsuarioPorNombre permite obtener un usuario por su nombre (autor).
+     * 
+     * @param autor
+     * @return
+     */
     public Usuario obtenerUsuarioPorNombre(String autor) {
         return usuarioRepository.findByNombre(autor);
     }
 
+    /**
+     * obtenerUsuariosActivos devuelve una lista de usuarios activos (cuyo campo
+     * activo es true).
+     * 
+     * @return
+     */
     public List<Usuario> obtenerUsuariosActivos() {
         return usuarioRepository.findByActivo(true);
+    }
+
+    /**
+     * existsById verifica si existe un usuario en la base de datos con el
+     * identificador proporcionado (id).
+     * 
+     * @param id
+     * @return
+     */
+    public boolean existsById(Long id) {
+        return usuarioRepository.existsById(id);
     }
 
 }
