@@ -1,0 +1,11 @@
+com.alura.foroalura
+com.alura.foroalura.controller
+com.alura.foroalura.domain.curso
+com.alura.foroalura.domain.respuesta
+com.alura.foroalura.domain.topico
+com.alura.foroalura.domain.usuario
+com.alura.foroalura.infra.exception
+com.alura.foroalura.infra.security
+com.alura.foroalura.infra.springdoc
+com.alura.foroalura.repository
+com.alura.foroalura.service

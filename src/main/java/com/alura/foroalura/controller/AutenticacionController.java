@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
  * un endpoint para autenticar a los usuarios y generar tokens JWT después de la
  * autenticación.
  * 
+ * @author Saúl Wade León
+ * @version 1.3
+ * 
  */
 @RestController
 @RequestMapping("/login")

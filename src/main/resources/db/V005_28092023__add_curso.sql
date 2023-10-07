@@ -1,3 +1,6 @@
+--
+-- Dumping data for table curso
+--
 DELETE FROM foroalura.curso;
 
 INSERT INTO
@@ -7,26 +10,14 @@ VALUES
     ('Curso de Desarrollo Web Avanzado 1', 1),
     ('Curso de Desarrollo Web Avanzado 2', 1),
     -- Categoría 2: Ciencia de Datos y Machine Learning
-    (
-        'Curso de Ciencia de Datos y Machine Learning 1',
-        2
-    ),
-    (
-        'Curso de Ciencia de Datos y Machine Learning 2',
-        2
-    ),
+    ('Curso de Ciencia de Datos y Machine Learning 1', 2),
+    ('Curso de Ciencia de Datos y Machine Learning 2', 2),
     -- Categoría 3: Programación en Python
     ('Curso de Programación en Python 1', 3),
     ('Curso de Programación en Python 2', 3),
     -- Categoría 4: Diseño de Experiencia de Usuario (UX)
-    (
-        'Curso de Diseño de Experiencia de Usuario (UX) 1',
-        4
-    ),
-    (
-        'Curso de Diseño de Experiencia de Usuario (UX) 2',
-        4
-    ),
+    ('Curso de Diseño de Experiencia de Usuario (UX) 1', 4),
+    ('Curso de Diseño de Experiencia de Usuario (UX) 2', 4),
     -- Categoría 5: Desarrollo Móvil con Android
     ('Curso de Desarrollo Móvil con Android 1', 5),
     ('Curso de Desarrollo Móvil con Android 2', 5),
@@ -55,23 +46,11 @@ VALUES
     ('Curso de Big Data Analytics 1', 13),
     ('Curso de Big Data Analytics 2', 13),
     -- Categoría 14: DevOps y Administración de Sistemas
-    (
-        'Curso de DevOps y Administración de Sistemas 1',
-        14
-    ),
-    (
-        'Curso de DevOps y Administración de Sistemas 2',
-        14
-    ),
+    ('Curso de DevOps y Administración de Sistemas 1', 14),
+    ('Curso de DevOps y Administración de Sistemas 2', 14),
     -- Categoría 15: Desarrollo de Aplicaciones Empresariales
-    (
-        'Curso de Desarrollo de Aplicaciones Empresariales 1',
-        15
-    ),
-    (
-        'Curso de Desarrollo de Aplicaciones Empresariales 2',
-        15
-    ),
+    ('Curso de Desarrollo de Aplicaciones Empresariales 1', 15),
+    ('Curso de Desarrollo de Aplicaciones Empresariales 2', 15),
     -- Categoría 16: Diseño Gráfico y Multimedia
     ('Curso de Diseño Gráfico y Multimedia 1', 16),
     ('Curso de Diseño Gráfico y Multimedia 2', 16),

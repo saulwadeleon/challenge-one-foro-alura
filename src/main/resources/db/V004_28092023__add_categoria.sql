@@ -1,3 +1,6 @@
+--
+-- Dumping data for table categoria
+--
 DELETE FROM foroalura.categoria;
 
 INSERT INTO
